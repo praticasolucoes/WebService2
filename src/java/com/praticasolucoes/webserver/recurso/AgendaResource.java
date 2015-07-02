@@ -67,11 +67,14 @@ public class AgendaResource {
         
     }
     
-    
+    @Path("{id}")
     @DELETE
-    @Consumes("application/json")
-    public void deleta(String content) throws ParseException {
-        System.out.println(content);
+    @Produces("text/plain")
+    public String deleta(@PathParam("id") int id ) throws ParseException {
+        
+        l.remove(id);
+        return "OK";
+        
          /*JSONArray jsonO ; 
         JSONParser jsonP = new JSONParser();
         jsonO = (JSONArray) jsonP.parse(content);
