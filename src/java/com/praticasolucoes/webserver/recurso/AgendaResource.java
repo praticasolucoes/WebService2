@@ -106,7 +106,6 @@ public class AgendaResource {
     @PUT
     @Consumes("application/json")
     public void putXml(String content) throws ParseException {
-        System.out.println(content);
         JSONObject jsonO ; 
         JSONObject json1 ; 
         JSONParser jsonP = new JSONParser();
@@ -121,6 +120,24 @@ public class AgendaResource {
         sequencia ++;
         
     }
+    
+    @PUT
+    @Consumes("application/json")
+    @Path("{id}")
+    public void alteraContato(@PathParam("id") int codigo , String content) throws ParseException {
+        JSONObject jsonO ; 
+        JSONObject json1 ; 
+        JSONParser jsonP = new JSONParser();
+        jsonO = (JSONObject) jsonP.parse(content);
+        json1 = (JSONObject) jsonO.get("operadora");
+        Contato contato = new Contato();
+        contato.setNome((String) jsonO.get("nome"));
+        contato.setCodigo(sequencia);
+        contato.setTelefone((String) jsonO.get("telefone"));
+        contato.setOperadora(new Operadora(((Long) json1.get("codigo")).intValue(),(String) json1.get("nome"),(String) json1.get("categoria")));
+        l.put(codigo, contato);
+    }
+        
     @GET
     @Produces("application/json")
     @Path("/operadoras")
